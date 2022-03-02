@@ -50,8 +50,8 @@ namespace ConsoleUI
 
         private static void ColorGetAllTest(IColorService colorService)
         {
-            var colors = colorService.GetAll();
-            foreach (var item in colors)
+            var result = colorService.GetAll();
+            foreach (var item in result.Data)
             {
                 Console.WriteLine(item.ColorName);
             }
@@ -69,8 +69,9 @@ namespace ConsoleUI
         {
             ICarDal carDal = new EfCarDal();
             ICarService carService = new CarManager(carDal);
-            var car2 = carServicer.GetCarDetails();
-            foreach (var item in car2)
+            var result = carServicer.GetCarDetails();
+
+            foreach (var item in result.Data)
             {
                 Console.WriteLine(item.ColorName + " " + item.BrandName + " " + item.DailyPrice + " " + item.Description);
             }
@@ -82,8 +83,8 @@ namespace ConsoleUI
             IBrandDal brandDal = new EfBrandDal();
             IBrandService brandService = new BrandManager(brandDal);
             brandService.Add(brand1);
-            var brands = brandService.GetAll();
-            foreach (var item in brands)
+            var result = brandService.GetAll();
+            foreach (var item in result.Data)
             {
                 Console.WriteLine(item.BrandName);
             }

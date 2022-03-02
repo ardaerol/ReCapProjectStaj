@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -15,33 +17,33 @@ public BrandManager(IBrandDal brandDal)
             _brandDal = brandDal;
         }
 
-        public void Add(Brand brand)
+        public IResult Add(Brand brand)
         {
              _brandDal.Add(brand);
-            Console.WriteLine("marka eklendi");
+            return new SuccessResult(Message.BrandAdded);
         }
 
-        public void Delete(int id)
+        public IResult Delete(int id)
         {
             var brand = _brandDal.Get(b => b.BrandId == id);
             _brandDal.Delete(brand);
-            Console.WriteLine("marka silindi");
+            return new SuccessResult(Message.BrandDeleted);
         }
 
-        public List<Brand> GetAll()
+        public IDataResult<List<Brand>> GetAll()
         {
-            return _brandDal.GetAll();
+            return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(),Message.BrandListed);
         }
 
-        public Brand GetById(int id)
+        public IDataResult<Brand> GetById(int id)
         {
-            return _brandDal.Get(b=>b.BrandId==id);
+            return new SuccessDataResult<Brand>(_brandDal.Get(b=>b.BrandId==id));
         }
 
-        public void Update(Brand brand)
+        public IResult Update(Brand brand)
         {
             _brandDal.Update(brand);
-            Console.WriteLine("marka güncellendi");
+            return new SuccessResult(Message.BrandUpdated);
         }
     }
 }
